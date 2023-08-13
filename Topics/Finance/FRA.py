@@ -106,7 +106,7 @@ def url_to_table(symbol:str="",year:int=2021,quarter:str = 0,report_type:str="BS
     if current_only == True:
         data = data[[header[len(header)-1]]]
 
-    print("URL to Table done!")
+    print(f"URL to Table done! Report:{report_type} Symbol:{symbol} Year:{year} Quarter:{quarter}")
     return data
 
 print("Module & Function done!")
@@ -120,3 +120,11 @@ BS2021 = url_to_table(URL)
 BS2021 = url_to_table(URL_BS)
 PL2021 = url_to_table(URL_PL)
 BS2021.to_excel("demo.xlsx")
+
+data = url_to_table(symbol="PNJ",year=2015,quarter=4,report_type="BS",\
+    current_only=True)
+for y in range(2016,2022):
+    for q in range(1,5):
+        data_quarter = url_to_table(symbol="PNJ",year=y,quarter=q,report_type="BS",current_only=True)
+        data = data.merge(data_quarter,how='inner',right_index=True,left_index=True)
+# %%
